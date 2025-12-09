@@ -34,9 +34,11 @@ jobs:
             artifact_suffix: "macos-arm64-metal"
             cc_target: ""
             cxx_target: ""
+            sdl2_enabled: "ON"
             
           # Intel (x86_64) with Accelerate framework - Cross-compiled on ARM64
           # Metal is disabled for x86_64 as it's Apple Silicon only
+          # SDL2 is disabled to avoid cross-compilation linking issues
           - name: "macOS x86_64 (Accelerate)"
             os: macos-14  # Use ARM64 runner and cross-compile for x86_64
             arch: x86_64
@@ -45,6 +47,7 @@ jobs:
             artifact_suffix: "macos-x86_64-accelerate"
             cc_target: "-target x86_64-apple-macos13.3"
             cxx_target: "-target x86_64-apple-macos13.3"
+            sdl2_enabled: "OFF"
 
     steps:
       - name: Checkout repository
@@ -74,8 +77,10 @@ jobs:
       - name: Install dependencies
         run: |
           brew update
-          # Install SDL2 for stream example (optional)
-          brew install sdl2
+          # Install SDL2 for stream example (only for ARM64 native builds)
+          if [ "${{ matrix.config.sdl2_enabled }}" == "ON" ]; then
+            brew install sdl2
+          fi
 
       - name: Build whisper.cpp
         working-directory: whisper-src
@@ -91,7 +96,7 @@ jobs:
             ${{ matrix.config.cmake_flags }} \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=${{ matrix.config.deployment_target }} \
-            -DWHISPER_SDL2=ON \
+            -DWHISPER_SDL2=${{ matrix.config.sdl2_enabled }} \
             -DBUILD_SHARED_LIBS=OFF \
             .
           

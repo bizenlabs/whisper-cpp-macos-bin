@@ -122,12 +122,18 @@ shasum -a 256 -c whisper-cpp-*.tar.gz.sha256
 
 ## 🎯 Available Tools
 
+### Core Tools (Both ARM64 and x86_64)
 - **whisper-cli** - Command-line transcription tool
 - **whisper-bench** - Performance benchmarking
-- **whisper-stream** - Real-time audio transcription from microphone
 - **whisper-server** - HTTP API server with OpenAI-compatible endpoints
 - **whisper-quantize** - Model quantization tool
 - And more...
+
+### ARM64-Only Tools
+- **whisper-stream** - Real-time audio transcription from microphone (requires SDL2)
+- **whisper-command** - Voice command example (requires SDL2)
+
+> **Note**: The x86_64 build excludes SDL2-dependent tools due to cross-compilation constraints. For real-time streaming on Intel Macs, consider using the command-line tools with audio file input instead.
 
 ## 📚 Documentation
 
