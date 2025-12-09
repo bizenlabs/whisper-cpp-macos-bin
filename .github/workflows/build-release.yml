@@ -32,9 +32,9 @@ jobs:
             cmake_flags: "-DGGML_METAL=ON -DGGML_ACCELERATE=ON -DCMAKE_OSX_ARCHITECTURES=arm64"
             artifact_suffix: "macos-arm64-metal"
             
-          # Intel (x86_64) with Accelerate framework
+          # Intel (x86_64) with Accelerate framework - Cross-compiled on ARM64
           - name: "macOS x86_64 (Accelerate)"
-            os: macos-13  # macOS 13 (Ventura) runs on Intel
+            os: macos-14  # Use ARM64 runner and cross-compile for x86_64
             arch: x86_64
             cmake_flags: "-DGGML_ACCELERATE=ON -DCMAKE_OSX_ARCHITECTURES=x86_64"
             artifact_suffix: "macos-x86_64-accelerate"

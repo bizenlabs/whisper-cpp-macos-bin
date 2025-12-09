@@ -89,7 +89,7 @@ The workflow builds two configurations in parallel:
 | Configuration | OS | Architecture | GPU Support | Optimizations |
 |--------------|-----|--------------|-------------|---------------|
 | macOS ARM64 (Metal) | macOS 14 (Sonoma) | arm64 | Metal GPU | ARM NEON, Accelerate |
-| macOS x86_64 (Accelerate) | macOS 13 (Ventura) | x86_64 | None (CPU) | AVX/AVX2, Accelerate |
+| macOS x86_64 (Accelerate) | macOS 14 (cross-compile) | x86_64 | None (CPU) | AVX/AVX2, Accelerate |
 
 ## 📦 Release Contents
 
