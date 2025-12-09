@@ -172,22 +172,22 @@ jobs:
           
           EOF
           
-          # Create tarball
-          tar -czf "$DIST_DIR.tar.gz" "$DIST_DIR"
+          # Create zip archive
+          zip -r "$DIST_DIR.zip" "$DIST_DIR"
           
           # Generate checksums
-          shasum -a 256 "$DIST_DIR.tar.gz" > "$DIST_DIR.tar.gz.sha256"
+          shasum -a 256 "$DIST_DIR.zip" > "$DIST_DIR.zip.sha256"
           
-          echo "Package created: $DIST_DIR.tar.gz"
-          ls -lh "$DIST_DIR.tar.gz"
+          echo "Package created: $DIST_DIR.zip"
+          ls -lh "$DIST_DIR.zip"
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: whisper-cpp-${{ matrix.config.artifact_suffix }}
           path: |
-            whisper-src/whisper-cpp-*.tar.gz
-            whisper-src/whisper-cpp-*.tar.gz.sha256
+            whisper-src/whisper-cpp-*.zip
+            whisper-src/whisper-cpp-*.zip.sha256
           retention-days: 7
 
   create-release:
@@ -220,7 +220,7 @@ jobs:
       - name: Prepare release assets
         run: |
           mkdir -p release-assets
-          find artifacts -name "*.tar.gz*" -exec cp {} release-assets/ \;
+          find artifacts -name "*.zip*" -exec cp {} release-assets/ \;
           ls -lh release-assets/
 
       - name: Generate release notes
@@ -233,13 +233,13 @@ jobs:
           ## 📦 Available Builds
           
           ### Apple Silicon (ARM64)
-          - **File**: `whisper-cpp-*-macos-arm64-metal.tar.gz`
+          - **File**: `whisper-cpp-*-macos-arm64-metal.zip`
           - **Architecture**: ARM64 (Apple M1/M2/M3/M4)
           - **GPU Support**: ✅ Metal (Apple GPU acceleration)
           - **Optimizations**: ARM NEON, Accelerate framework
           
           ### Intel (x86_64)
-          - **File**: `whisper-cpp-*-macos-x86_64-accelerate.tar.gz`
+          - **File**: `whisper-cpp-*-macos-x86_64-accelerate.zip`
           - **Architecture**: x86_64 (Intel processors)
           - **GPU Support**: ❌ CPU only
           - **Optimizations**: AVX/AVX2, Accelerate framework
@@ -247,7 +247,7 @@ jobs:
           ## 🚀 Quick Start
           
           1. Download the appropriate archive for your Mac architecture
-          2. Extract the archive: `tar -xzf whisper-cpp-*.tar.gz`
+          2. Extract the archive: `unzip whisper-cpp-*.zip`
           3. Download a model: `cd whisper-cpp-*/models && ./download-ggml-model.sh base.en`
           4. Run transcription: `cd .. && ./bin/whisper-cli -m models/ggml-base.en.bin -f samples/jfk.wav`
           
@@ -255,7 +255,7 @@ jobs:
           
           Each release includes SHA256 checksums. Verify your download:
           ```bash
-          shasum -a 256 -c whisper-cpp-*.tar.gz.sha256
+          shasum -a 256 -c whisper-cpp-*.zip.sha256
           ```
           
           ## 📋 System Requirements

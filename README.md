@@ -8,11 +8,11 @@ Pre-built binary distributions of [whisper.cpp](https://github.com/ggml-org/whis
 
 Visit the [Releases](https://github.com/bizenlabs/whisper-cpp-macos-bin/releases) page to download the latest builds:
 
-- **Apple Silicon (M1/M2/M3/M4)**: `whisper-cpp-*-macos-arm64-metal.tar.gz`
+- **Apple Silicon (M1/M2/M3/M4)**: `whisper-cpp-*-macos-arm64-metal.zip`
   - Includes Metal GPU acceleration for optimal performance
   - Optimized with ARM NEON and Accelerate framework
   
-- **Intel (x86_64)**: `whisper-cpp-*-macos-x86_64-accelerate.tar.gz`
+- **Intel (x86_64)**: `whisper-cpp-*-macos-x86_64-accelerate.zip`
   - CPU-optimized with AVX/AVX2 instructions
   - Uses Accelerate framework for performance
 
@@ -20,7 +20,7 @@ Visit the [Releases](https://github.com/bizenlabs/whisper-cpp-macos-bin/releases
 
 ```bash
 # 1. Download and extract the appropriate binary for your architecture
-tar -xzf whisper-cpp-*.tar.gz
+unzip whisper-cpp-*.zip
 cd whisper-cpp-*
 
 # 2. Download a model
@@ -117,7 +117,7 @@ whisper-cpp-<version>-<platform>/
 Each release includes SHA256 checksums. Verify your download:
 
 ```bash
-shasum -a 256 -c whisper-cpp-*.tar.gz.sha256
+shasum -a 256 -c whisper-cpp-*.zip.sha256
 ```
 
 ## 🎯 Available Tools
