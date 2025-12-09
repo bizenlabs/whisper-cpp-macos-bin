@@ -34,9 +34,9 @@ cd ..
 
 ## 📋 System Requirements
 
-- **macOS**: 11.0 (Big Sur) or later
-- **Apple Silicon builds**: Requires Apple M-series processor
-- **Intel builds**: Requires x86_64 Intel processor
+- **macOS**: 13.0 (Ventura) or later
+- **Apple Silicon builds**: Requires Apple M-series processor (macOS 13.0+)
+- **Intel builds**: Requires x86_64 Intel processor (macOS 13.3+)
 
 ## 🔧 Build Configurations
 

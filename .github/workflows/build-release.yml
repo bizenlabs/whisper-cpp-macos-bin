@@ -32,15 +32,19 @@ jobs:
             cmake_flags: "-DGGML_METAL=ON -DGGML_ACCELERATE=ON -DCMAKE_OSX_ARCHITECTURES=arm64"
             deployment_target: "13.0"
             artifact_suffix: "macos-arm64-metal"
+            cc_target: ""
+            cxx_target: ""
             
           # Intel (x86_64) with Accelerate framework - Cross-compiled on ARM64
           # Metal is disabled for x86_64 as it's Apple Silicon only
           - name: "macOS x86_64 (Accelerate)"
             os: macos-14  # Use ARM64 runner and cross-compile for x86_64
             arch: x86_64
-            cmake_flags: "-DGGML_METAL=OFF -DGGML_ACCELERATE=ON -DCMAKE_OSX_ARCHITECTURES=x86_64"
-            deployment_target: "11.0"
+            cmake_flags: "-DGGML_METAL=OFF -DGGML_ACCELERATE=ON -DCMAKE_OSX_ARCHITECTURES=x86_64 -DGGML_NATIVE=OFF"
+            deployment_target: "13.3"
             artifact_suffix: "macos-x86_64-accelerate"
+            cc_target: "-target x86_64-apple-macos13.3"
+            cxx_target: "-target x86_64-apple-macos13.3"
 
     steps:
       - name: Checkout repository
@@ -77,6 +81,10 @@ jobs:
         working-directory: whisper-src
         run: |
           echo "Building for ${{ matrix.config.arch }} with flags: ${{ matrix.config.cmake_flags }}"
+          
+          # Set compiler flags for cross-compilation if needed
+          export CFLAGS="${{ matrix.config.cc_target }}"
+          export CXXFLAGS="${{ matrix.config.cxx_target }}"
           
           # Configure CMake with optimization flags
           cmake -B build \
